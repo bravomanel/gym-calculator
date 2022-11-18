@@ -1,0 +1,66 @@
+#oneRepMax {
+   max-width: 30rem;
+   margin: auto;
+
+   h2 {
+      font-size: 2rem;
+      text-align: center;
+      margin: .5rem;
+   }
+}
+
+#ORMInput {
+   margin: auto;
+   font-size: 1.5rem;
+   width: 80%;
+
+   @media screen and (min-width:600px) {
+      width: 60%;
+   }
+
+   align-items: center;
+
+   .inputsDiv {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      padding: .25rem;
+   }
+
+   .radioBtns {
+      width: 100%;
+      margin: auto;
+      text-align: center;
+      // border: 1px solid black;
+   }
+
+   #weight,
+   #reps {
+      width: 8rem;
+   }
+
+   #calculateBtnContainer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: .25rem;
+   }
+
+   #calculateBtn {
+      font-size: 1.5rem;
+      width: 10rem;
+      background-color: white;
+      border: 1px solid black;
+      border-radius: .35rem;
+   }
+
+}
+
+#ORMTable {
+   margin-top: 1rem;
+   font-size: 1.5rem;
+   display: flex;
+   flex-flow: column nowrap;
+
+   justify-content: space-between;
+}

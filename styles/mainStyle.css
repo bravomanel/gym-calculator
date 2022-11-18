@@ -1,0 +1,96 @@
+*, body {
+  margin: 0;
+}
+
+body {
+  margin-bottom: 5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+header {
+  width: 100vw;
+  height: 4rem;
+  background-color: rgb(171, 171, 171);
+  text-align: center;
+}
+header h1 {
+  padding-top: 1rem;
+}
+
+a {
+  font-size: 1.75rem;
+  margin: 2rem auto;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+
+#oneRepMax {
+  max-width: 30rem;
+  margin: auto;
+}
+#oneRepMax h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin: 0.5rem;
+}
+
+#ORMInput {
+  margin: auto;
+  font-size: 1.5rem;
+  width: 80%;
+  align-items: center;
+}
+@media screen and (min-width: 600px) {
+  #ORMInput {
+    width: 60%;
+  }
+}
+#ORMInput .inputsDiv {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 0.25rem;
+}
+#ORMInput .radioBtns {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+#ORMInput #weight,
+#ORMInput #reps {
+  width: 8rem;
+}
+#ORMInput #calculateBtnContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+}
+#ORMInput #calculateBtn {
+  font-size: 1.5rem;
+  width: 10rem;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 0.35rem;
+}
+
+#ORMTable {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+}
+
+/* 
+
+Colors:
+
+orange:
+rgb(255, 120, 40)
+
+*/
