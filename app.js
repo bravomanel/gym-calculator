@@ -23,30 +23,119 @@ function Header() {
 function OneRepMax() {
    const [weightArr, setWeightArr] = React.useState(['Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg']);
    const [unity, setUnity] = React.useState(' Kg')
+   const [kgChecked, setKgChecked] = React.useState(true);
+   const [originalWeight, setOriginalWeight] = React.useState();
+
+   const lbToKg = value => value / 2.20462;
+   const kgToLb = value => value * 2.20462;
 
 
-   const calculateRM = () => {
-      const weight = document.getElementById('weight').value
+   const calculateRM = (tempWeight = 0, localUnity = unity) => {
       const reps = document.getElementById('reps').value
+      let originalRepsPosition = 15;
+
+      let weight;
+
+      if (tempWeight == 0) {
+         weight = originalWeight;
+      } else {
+         weight = tempWeight;
+      }
+
+      if (kgChecked) {
+         document.getElementById('changeUnityToLbBtn').style.display = 'block';
+         document.getElementById('changeUnityToKgBtn').style.display = 'none';
+      } else {
+         document.getElementById('changeUnityToKgBtn').style.display = 'block';
+         document.getElementById('changeUnityToLbBtn').style.display = 'none';
+      }
+
+      switch (+reps) {
+         case 1:
+            originalRepsPosition = 0;
+            break;
+         case 2:
+            originalRepsPosition = 1;
+            break;
+         case 3:
+            originalRepsPosition = 2;
+            break;
+         case 4:
+            originalRepsPosition = 3;
+            break;
+         case 5:
+            originalRepsPosition = 4;
+            break;
+         case 6:
+            originalRepsPosition = 5;
+            break;
+         case 8:
+            originalRepsPosition = 6;
+            break;
+         case 10:
+            originalRepsPosition = 7;
+            break;
+         case 12:
+            originalRepsPosition = 8;
+            break;
+         case 16:
+            originalRepsPosition = 9;
+            break;
+         case 20:
+            originalRepsPosition = 10;
+            break;
+         case 24:
+            originalRepsPosition = 11;
+            break;
+         case 30:
+            originalRepsPosition = 12;
+            break;
+         case 40:
+            originalRepsPosition = 13;
+            break;
+         default:
+            originalRepsPosition = 14;
+            break;
+      }
 
       const oneRM = Math.round(weight * (1 + (reps / 30)));
       setWeightArr({
          ...weightArr,
-         [0]: oneRM + unity,
-         [1]: Math.round(oneRM * 0.95) + unity,
-         [2]: Math.round(oneRM * 0.92) + unity,
-         [3]: Math.round(oneRM * 0.90) + unity,
-         [4]: Math.round(oneRM * 0.87) + unity,
-         [5]: Math.round(oneRM * 0.85) + unity,
-         [6]: Math.round(oneRM * 0.80) + unity,
-         [7]: Math.round(oneRM * 0.80) + unity,
-         [8]: Math.round(oneRM * 0.70) + unity,
-         [9]: Math.round(oneRM * 0.65) + unity,
-         [10]: Math.round(oneRM * 0.60) + unity,
-         [11]: Math.round(oneRM * 0.65) + unity,
-         [12]: Math.round(oneRM * 0.50) + unity,
-         [13]: Math.round(oneRM * 0.40) + unity
+         [0]: oneRM + localUnity,
+         [1]: Math.round(oneRM * 9.5) / 10 + localUnity,
+         [2]: Math.round(oneRM * 9.2) / 10 + localUnity,
+         [3]: Math.round(oneRM * 9.0) / 10 + localUnity,
+         [4]: Math.round(oneRM * 8.7) / 10 + localUnity,
+         [5]: Math.round(oneRM * 8.5) / 10 + localUnity,
+         [6]: Math.round(oneRM * 8.0) / 10 + localUnity,
+         [7]: Math.round(oneRM * 7.5) / 10 + localUnity,
+         [8]: Math.round(oneRM * 7.0) / 10 + localUnity,
+         [9]: Math.round(oneRM * 6.5) / 10 + localUnity,
+         [10]: Math.round(oneRM * 6.0) / 10 + localUnity,
+         [11]: Math.round(oneRM * 5.5) / 10 + localUnity,
+         [12]: Math.round(oneRM * 5.0) / 10 + localUnity,
+         [13]: Math.round(oneRM * 4.0) / 10 + localUnity,
+         [originalRepsPosition]: Math.round(weight * 10.0) / 10 + localUnity
       });
+
+   }
+
+   const changeToLb = () => {
+      setUnity(' Lb');
+      setKgChecked(false);
+      setOriginalWeight(Math.round(kgToLb(originalWeight)));
+      calculateRM(kgToLb(originalWeight), ' Lb');
+      document.getElementById('changeUnityToKgBtn').style.display = 'block';
+      document.getElementById('changeUnityToLbBtn').style.display = 'none';
+   }
+
+   const changeToKg = () => {
+      setUnity(' Kg');
+      setKgChecked(true);
+      setOriginalWeight(Math.round(lbToKg(originalWeight)));
+      calculateRM(lbToKg(originalWeight), ' Kg');
+      document.getElementById('changeUnityToLbBtn').style.display = 'block';
+      document.getElementById('changeUnityToKgBtn').style.display = 'none';
    }
 
    return (
@@ -56,7 +145,7 @@ function OneRepMax() {
          <div id='ORMInput'>
             <div class='inputsDiv'>
                <label for='ORMInput'>Weight:</label>
-               <input type='number' id='weight' name='weight' placeholder='100' min='1'></input>
+               <input type='number' id='weight' name='weight' placeholder='100' min='1' value={originalWeight} onChange={() => setOriginalWeight(document.getElementById('weight').value)}></input>
             </div>
             <div class='inputsDiv'>
                <label for='reps'>Repetitions:</label>
@@ -64,16 +153,24 @@ function OneRepMax() {
             </div>
             <form class='inputsDiv'>
                <div class='radioBtns'>
-                  <input type='radio' id='weight-unity-lb' name='weight-unity' value='Lb' onClick={() => { setUnity(' Lb') }} />
+                  <input type='radio' id='weight-unity-lb' name='weight-unity' value='Lb' onClick={() => {
+                     setKgChecked(false);
+                     setUnity(' Lb')
+                  }} checked={!kgChecked} />
                   <label for='weight-unity-lb'>Pounds</label>
                </div>
                <div class='radioBtns'>
-                  <input type='radio' id='weight-unity-kg' name='weight-unity' value='Kg' onClick={() => { setUnity(' Kg') }} />
+                  <input type='radio' id='weight-unity-kg' name='weight-unity' value='Kg' onClick={() => {
+                     setKgChecked(true);
+                     setUnity(' Kg')
+                  }} checked={kgChecked} />
                   <label for='weight-unity-kg'>Kilograms</label>
                </div>
             </form>
-            <div id='calculateBtnContainer'>
-               <button id='calculateBtn' value='Calculate' onClick={calculateRM}>Calculate</button>
+            <div id='btnContainer'>
+               <button id='changeUnityToKgBtn' class='buttons' value='Calculate' onClick={changeToKg}>Convert To Kg</button>
+               <button id='changeUnityToLbBtn' class='buttons' value='Calculate' onClick={changeToLb}>Convert To Lb</button>
+               <button id='calculateBtn' class='buttons' value='Calculate' onClick={() => calculateRM()}>Calculate</button>
             </div>
          </div>
 
