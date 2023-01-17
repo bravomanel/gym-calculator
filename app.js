@@ -1,25 +1,22 @@
-// import React, { useState } from 'react';
-
 function Header() {
    return (
       <header>
+         <div></div>
          <h1 id='h1'>
             {/* <a href='./index.html'> */}
             <a href='#'>
                Gym Calculator
             </a>
          </h1>
-         {/* <nav>
+         <nav>
             <a href='#OneRepMax'>1RM Max</a>
-            <a href='#2RepMax'>2RM Max</a>
-            <a href='#3RepMax'>3RM Max</a>
-            <a href='#4RepMax'>4RM Max</a>
-         </nav> */}
+            <a href='#2RepMax'>IMC</a>
+            <a href='#3RepMax'>Body Fat</a>
+         </nav>
 
       </header>
    )
 }
-
 function OneRepMax() {
    const [weightArr, setWeightArr] = React.useState(['Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg']);
    const [unity, setUnity] = React.useState(' Kg')
@@ -257,11 +254,57 @@ function OneRepMax() {
    )
 }
 
+function IMC() {
+   const [originalWeight, setOriginalWeight] = React.useState();
+   const [originalHeight, setOriginalHeight] = React.useState();
+   const [IMC, setIMC] = React.useState();
+
+   const calculateIMC = () => {
+      setIMC(originalWeight/((originalHeight/100)**2));
+   }
+
+   return (
+      <section id='imc'>
+         <h2>IMC</h2>
+
+         <div id='imcInputContainer'>
+            <div class='inputsDiv'>
+               <label for='weight'>Weight:</label>
+               <input type='number' id='weight' name='weight' placeholder='70' min='1' max='800' value={originalWeight} onChange={() => setOriginalWeight(document.getElementById('weight').value)}></input>
+            </div>
+            <div class='inputsDiv'>
+               <label for='height'>Height:</label>
+               <input type='number' id='height' name='height' placeholder='170' min='1' max='250'  value={originalHeight} onChange={() => setOriginalHeight(document.getElementById('height').value)}></input>
+            </div>
+            <form class='inputsDiv'>
+               <div class='radioBtns'>
+                  <input type='radio' id='weight-unity-lb' name='weight-unity' value='Lb' onClick={() => { }} />
+                  <label for='weight-unity-lb'>Imperial</label>
+               </div>
+               <div class='radioBtns'>
+                  <input type='radio' id='weight-unity-kg' name='weight-unity' value='Kg' onClick={() => { }} />
+                  <label for='weight-unity-kg'>Metric</label>
+               </div>
+            </form>
+            <div id='btnContainer'>
+               <button id='calculateBtn' class='buttons' value='Calculate' onClick={() => calculateIMC()}>Calculate</button>
+            </div>
+         </div>
+         <div>
+            <p>
+               {IMC}
+            </p>
+         </div>
+      </section>
+   )
+}
+
 function MyApp() {
    return (
       <div>
          <Header />
-         <OneRepMax />
+         {/* <OneRepMax /> */}
+         <IMC />
       </div>
    )
 }

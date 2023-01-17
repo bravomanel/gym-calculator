@@ -1,11 +1,42 @@
+// -----------------------------
+// Original
+
+// header {
+//    // position: fixed;
+//    width: 100vw;
+//    height: 4rem;
+//    background-color: rgb(171, 171, 171);
+
+//    // display: grid;
+//    // grid-template-columns: 3fr 6fr 3fr;
+//    text-align: center;
+
+//    h1 {
+//       padding-top: 1rem;
+//    }
+// }
+
+// a {
+//    font-size: 1.75rem;
+//    margin: 2rem auto;
+//    text-align: center;
+//    text-decoration: none;
+//    color: black;
+// }
+
+// Original
+// -----------------------------
+
+
+
 header {
    // position: fixed;
    width: 100vw;
    height: 4rem;
    background-color: rgb(171, 171, 171);
 
-   // display: grid;
-   // grid-template-columns: 3fr 6fr 3fr;
+   display: grid;
+   grid-template-columns: 3fr 3fr 3fr;
    text-align: center;
 
    h1 {
@@ -13,10 +44,18 @@ header {
    }
 }
 
+nav {
+   font-size: 1.5rem;
+   
+   padding-top: 1rem;
+}
+
 a {
-   font-size: 1.75rem;
-   margin: 2rem auto;
    text-align: center;
+   margin: auto 1rem;
    text-decoration: none;
    color: black;
+   &:hover {
+      font-size: 1.425rem;
+      font-weight: bold;   }
 }
