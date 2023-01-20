@@ -1,23 +1,28 @@
-function Header() {
+function Header(props) {
+
+   function chooseCalculator(value) {
+      props.choose(value);
+   }
+
    return (
       <header>
-         <div></div>
+         <ChangeLanguage setWords={props.changeDictionary} />
          <h1 id='h1'>
-            {/* <a href='./index.html'> */}
             <a href='#'>
-               Gym Calculator
+               {/* Gym Calculator */}
+               {props.myDictionary.gymCalculator}
             </a>
          </h1>
          <nav>
-            <a href='#OneRepMax'>1RM Max</a>
-            <a href='#2RepMax'>IMC</a>
-            <a href='#3RepMax'>Body Fat</a>
+            <a href='#OneRepMax' onClick={() => chooseCalculator(<OneRepMax />)}>1 Rep Max</a>
+            <a href='#2RepMax' onClick={() => chooseCalculator(<IMC />)}>IMC</a>
+            <a href='#3RepMax' onClick={() => chooseCalculator(<BodyFat />)}>Body Fat</a>
          </nav>
 
       </header>
    )
 }
-function OneRepMax() {
+function OneRepMax(props) {
    const [weightArr, setWeightArr] = React.useState(['Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg']);
    const [unity, setUnity] = React.useState(' Kg')
    const [kgChecked, setKgChecked] = React.useState(true);
@@ -134,6 +139,8 @@ function OneRepMax() {
       document.getElementById('changeUnityToLbBtn').style.display = 'block';
       document.getElementById('changeUnityToKgBtn').style.display = 'none';
    }
+
+   console.log(props.myDictionary)
 
    return (
       <section id='oneRepMax'>
@@ -254,13 +261,75 @@ function OneRepMax() {
    )
 }
 
-function IMC() {
+function IMC(props) {
    const [originalWeight, setOriginalWeight] = React.useState();
    const [originalHeight, setOriginalHeight] = React.useState();
-   const [IMC, setIMC] = React.useState();
+   const [IMC, setIMC] = React.useState(0);
+   const [label, setLabel] = React.useState('');
+
 
    const calculateIMC = () => {
-      setIMC(originalWeight/((originalHeight/100)**2));
+      const newIMC = originalWeight / ((originalHeight / 100) ** 2);
+      setIMC(Math.round(newIMC * 10) / 10);
+
+      changeLabel(newIMC);
+      changeSlideBar(newIMC);
+
+
+   }
+
+   const changeSlideBar = (value) => {
+      if (value < 18.5) {
+         backgroundGradient('slide0', value, 14, 18.5, 'orange');
+         backgroundGradient('slide1', value, 18.5, 25, 'orange');
+         backgroundGradient('slide2', value, 25, 30, 'orange');
+         backgroundGradient('slide3', value, 30, 35, 'orange');
+         backgroundGradient('slide4', value, 35, 40, 'orange');
+         backgroundGradient('slide5', value, 40, 45, 'orange');
+      } else if (value < 25) {
+         backgroundGradient('slide0', value, 14, 18.5, 'green');
+         backgroundGradient('slide1', value, 18.5, 25, 'green');
+         backgroundGradient('slide2', value, 25, 30, 'green');
+         backgroundGradient('slide3', value, 30, 35, 'green');
+         backgroundGradient('slide4', value, 35, 40, 'green');
+         backgroundGradient('slide5', value, 40, 45, 'green');
+      } else if (value < 30) {
+         backgroundGradient('slide0', value, 14, 18.5, 'orange');
+         backgroundGradient('slide1', value, 18.5, 25, 'orange');
+         backgroundGradient('slide2', value, 25, 30, 'orange');
+         backgroundGradient('slide3', value, 30, 35, 'orange');
+         backgroundGradient('slide4', value, 35, 40, 'orange');
+         backgroundGradient('slide5', value, 40, 45, 'orange');
+      } else {
+         backgroundGradient('slide0', value, 14, 18.5, 'red');
+         backgroundGradient('slide1', value, 18.5, 25, 'red');
+         backgroundGradient('slide2', value, 25, 30, 'red');
+         backgroundGradient('slide3', value, 30, 35, 'red');
+         backgroundGradient('slide4', value, 35, 40, 'red');
+         backgroundGradient('slide5', value, 40, 45, 'red');
+      }
+   }
+
+   const backgroundGradient = (element, value, start, end, color) => {
+      const distance = (100 * (value - start) / (end - start))
+      const style = `linear-gradient(90deg, ${color} 0%, ${color} ${distance}%, rgba(0, 0, 0, 0) ${distance}%, rgba(0, 0, 0, 0) 100%)`;
+      document.getElementById(element).style.background = style;
+   }
+
+   const changeLabel = (value) => {
+      if (value > 40) {
+         setLabel('Obesidade grave (grau III)')
+      } else if (value > 30) {
+         setLabel('Obesidade grau II');
+      } else if (value > 25) {
+         setLabel('Obesidade grau I');
+      } else if (value >= 18.5) {
+         setLabel('Normal');
+      } else if (value > 0) {
+         setLabel('Magreza');
+      } else {
+         setLabel('');
+      }
    }
 
    return (
@@ -274,7 +343,7 @@ function IMC() {
             </div>
             <div class='inputsDiv'>
                <label for='height'>Height:</label>
-               <input type='number' id='height' name='height' placeholder='170' min='1' max='250'  value={originalHeight} onChange={() => setOriginalHeight(document.getElementById('height').value)}></input>
+               <input type='number' id='height' name='height' placeholder='170' min='1' max='250' value={originalHeight} onChange={() => setOriginalHeight(document.getElementById('height').value)}></input>
             </div>
             <form class='inputsDiv'>
                <div class='radioBtns'>
@@ -291,20 +360,83 @@ function IMC() {
             </div>
          </div>
          <div>
-            <p>
-               {IMC}
-            </p>
+            <div id='displayIMC'>
+               <p>Seu IMC: {IMC}</p>
+            </div>
+
+            <div id='slideDiv'>
+               <div id='slide0' className='slides'><p>14</p></div>
+               <div id='slide1' className='slides'><p>18.5</p></div>
+               <div id='slide2' className='slides'><p>25</p></div>
+               <div id='slide3' className='slides'><p>30</p></div>
+               <div id='slide4' className='slides'><p>35</p></div>
+               <div id='slide5' className='slides'><p>40</p></div>
+               <div id='slide6' className='slides'><p>45</p></div>
+            </div>
+
+            <div id='label' >
+               <p>
+                  {label}
+               </p>
+            </div>
+
          </div>
       </section>
    )
 }
 
+function BodyFat(props) {
+   return (
+      <section>
+         <h2>Estamos trabalhando nessa função...</h2>
+      </section>
+   )
+}
+
+function ChangeLanguage(props) {
+   const [language, setLanguage] = React.useState('EN-UK');
+   const [languageImage, setLanguageImage] = React.useState('./img/UK_flag.png');
+
+   function changeLanguageButton() {
+      if (language == 'PT-BR') {
+         setLanguage('EN-UK');
+         setLanguageImage('./img/UK_flag.png');
+      } else if (language == 'EN-UK') {
+         setLanguage('PT-BR');
+         setLanguageImage('./img/BR_flag.png');
+      }
+      console.log('change');
+      props.changeDictionary({
+         gymCalculator: 'Calculara de Academia',
+         pounds: 'Libras',
+      });
+
+   }
+
+   return (
+      <section>
+         <img src={languageImage} id="lang_img" onClick={changeLanguageButton}></img>
+      </section>
+   )
+}
+
 function MyApp() {
+   const [calculator, setCalculator] = React.useState(<OneRepMax myDictionary={dictionary} />);
+   const [dictionary, setDictionary] = React.useState({
+      gymCalculator: 'Gym Calculator',
+      pounds: "Pounds",
+      oneRepMaxCalculator: '1RM Calculator',
+      weight: 'Weight',
+      height: 'Height',
+      repetitions: 'Reps',
+   });
+
+
    return (
       <div>
-         <Header />
-         {/* <OneRepMax /> */}
-         <IMC />
+         <Header choose={setCalculator} myDictionary={dictionary} />
+         {calculator}
+         {/* <OneRepMax myDictionary={dictionary} /> */}
       </div>
    )
 }

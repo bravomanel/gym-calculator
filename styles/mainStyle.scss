@@ -5,6 +5,7 @@ body {
 
 body {
    margin-bottom: 5rem;
+   background-color: gray;
 }
 
 .hidden {
@@ -14,6 +15,9 @@ body {
 @import "header";
 @import "orm";
 @import "imc";
+@import "lang";
+
+
 
 
 

@@ -5,6 +5,7 @@ body {
 
 body {
   margin-bottom: 5rem;
+  background-color: gray;
 }
 
 .hidden {
@@ -17,14 +18,15 @@ header {
   background-color: rgb(171, 171, 171);
   display: grid;
   grid-template-columns: 3fr 3fr 3fr;
-  text-align: center;
 }
 header h1 {
+  text-align: center;
   padding-top: 1rem;
 }
 
 nav {
   font-size: 1.5rem;
+  text-align: center;
   padding-top: 1rem;
 }
 
@@ -33,10 +35,6 @@ a {
   margin: auto 1rem;
   text-decoration: none;
   color: black;
-}
-a:hover {
-  font-size: 1.425rem;
-  font-weight: bold;
 }
 
 #oneRepMax {
@@ -154,6 +152,55 @@ a:hover {
   margin: 0.25rem;
 }
 
+#slideDiv {
+  /* max-width: 32rem; */
+  display: flex;
+  flex-flow: nowrap row;
+  justify-content: center;
+}
+
+.slides {
+  margin: 0;
+  margin-top: 2.5rem;
+  width: 5rem;
+  height: 1.25rem;
+  border-bottom: 4px solid;
+  border-top: none;
+  border-left: 2px solid;
+  border-right: 2px solid;
+}
+.slides p {
+  position: relative;
+  top: -25px;
+  left: -11px;
+  font-size: 1.25rem;
+}
+
+#slide0 {
+  border-left: 3px solid;
+}
+
+#slide6 {
+  border: none;
+  width: 0.5rem;
+}
+
+#label {
+  width: 100%;
+  font-size: 2rem;
+  text-align: center;
+  margin: 0.75rem auto;
+}
+
+#displayIMC {
+  margin: 1rem auto;
+  width: 20rem;
+  font-size: 2rem;
+  border: 2px solid black;
+  border-radius: 0.25rem;
+  text-align: center;
+}
+
 @media screen and (max-width: 600px) {
   #ORMInput {
     width: 60%;
@@ -169,6 +216,13 @@ a:hover {
     flex-flow: wrap column;
   }
 }
+#lang_img {
+  width: 3rem;
+  margin-top: 1rem;
+  align-items: left;
+  margin-left: 1rem;
+}
+
 /* 
 
 Colors:
