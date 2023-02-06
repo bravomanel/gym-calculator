@@ -1,0 +1,71 @@
+.inputContainer {
+   margin: auto;
+   font-size: 1.5rem;
+   width: 80%;
+   align-items: center;
+}
+
+.inputsDiv {
+   margin: auto;
+   width: 75%;
+   display: flex;
+   flex-flow: row nowrap;
+   justify-content: space-between;
+   padding: .25rem;
+}
+
+.border-red {
+   border: 1px solid red;
+}
+
+.radioBtnsContainer {
+   width: 100%;
+   margin: auto;
+   text-align: center;
+}
+
+.radioBtns {
+   margin-right: .2rem;
+}
+
+.buttons {
+   font-size: 1.5rem;
+   width: 14rem;
+   background-color: white;
+   border: 1px solid black;
+   border-radius: .35rem;
+   margin: .25rem;
+}
+
+.btnContainer {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: .25rem;
+}
+
+#imcInputContainer {
+   .inputsDiv {
+      justify-content: space-evenly;
+   }
+}
+
+
+#ORMInput {
+
+   #weight,
+   #reps {
+      width: 8rem;
+   }
+}
+
+#bfInputContainer {
+   .inputsDiv {
+      margin: auto;
+      width: 45%;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      padding: .25rem;
+   }
+}

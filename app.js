@@ -15,34 +15,34 @@ function Header(props) {
          </h1>
          <nav>
             <a href='#OneRepMax' onClick={() => chooseCalculator(<OneRepMax />)}>1 Rep Max</a>
-            <a href='#2RepMax' onClick={() => chooseCalculator(<IMC />)}>IMC</a>
-            <a href='#3RepMax' onClick={() => chooseCalculator(<BodyFat />)}>Body Fat</a>
+            <a href='#IMC' onClick={() => chooseCalculator(<IMC />)}>IMC</a>
+            <a href='#BodyFat' onClick={() => chooseCalculator(<BodyFat />)}>Body Fat</a>
          </nav>
 
       </header>
    )
 }
+
 function OneRepMax(props) {
    const [weightArr, setWeightArr] = React.useState(['Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg', 'Kg']);
    const [unity, setUnity] = React.useState(' Kg')
    const [kgChecked, setKgChecked] = React.useState(true);
-   const [originalWeight, setOriginalWeight] = React.useState();
+   const [weight, setWeight] = React.useState();
+   const [reps, setReps] = React.useState();
 
    const lbToKg = value => value / 2.20462;
    const kgToLb = value => value * 2.20462;
 
 
-   const calculateRM = (tempWeight = 0, localUnity = unity) => {
-      const reps = document.getElementById('reps').value
+   const calculateRM = (localWeight = weight, localUnity = unity) => {
+      reps ? document.getElementById('reps').classList.remove('border-red') : document.getElementById('reps').classList.add('border-red');
+      localWeight ? document.getElementById('weight').classList.remove('border-red') : document.getElementById('weight').classList.add('border-red');
+      if (!reps || !localWeight) {
+         return;
+      }
+
       let originalRepsPosition = 15;
 
-      let weight;
-
-      if (tempWeight == 0) {
-         weight = originalWeight;
-      } else {
-         weight = tempWeight;
-      }
 
       if (kgChecked) {
          document.getElementById('changeUnityToLbBtn').style.display = 'block';
@@ -100,7 +100,8 @@ function OneRepMax(props) {
             break;
       }
 
-      const oneRM = Math.round(weight * (1 + (reps / 30)));
+
+      const oneRM = Math.round(localWeight * (1 + (reps / 30)));
       setWeightArr({
          ...weightArr,
          [0]: oneRM + localUnity,
@@ -117,7 +118,7 @@ function OneRepMax(props) {
          [11]: Math.round(oneRM * 5.5) / 10 + localUnity,
          [12]: Math.round(oneRM * 5.0) / 10 + localUnity,
          [13]: Math.round(oneRM * 4.0) / 10 + localUnity,
-         [originalRepsPosition]: Math.round(weight * 10.0) / 10 + localUnity
+         [originalRepsPosition]: Math.round(localWeight * 10.0) / 10 + localUnity
       });
 
    }
@@ -125,56 +126,55 @@ function OneRepMax(props) {
    const changeToLb = () => {
       setUnity(' Lb');
       setKgChecked(false);
-      setOriginalWeight(Math.round(kgToLb(originalWeight)));
-      calculateRM(kgToLb(originalWeight), ' Lb');
+      setWeight(Math.round(kgToLb(weight)));
+      calculateRM(kgToLb(weight), ' Lb');
       document.getElementById('changeUnityToKgBtn').style.display = 'block';
       document.getElementById('changeUnityToLbBtn').style.display = 'none';
    }
 
    const changeToKg = () => {
+      const newWeight = Math.round(lbToKg(weight));
       setUnity(' Kg');
       setKgChecked(true);
-      setOriginalWeight(Math.round(lbToKg(originalWeight)));
-      calculateRM(lbToKg(originalWeight), ' Kg');
+      setWeight(newWeight);
+      calculateRM(newWeight, ' Kg');
       document.getElementById('changeUnityToLbBtn').style.display = 'block';
       document.getElementById('changeUnityToKgBtn').style.display = 'none';
    }
-
-   console.log(props.myDictionary)
 
    return (
       <section id='oneRepMax'>
          <h2>One Rep Max Calculator</h2>
 
-         <div id='ORMInput'>
+         <div id='ORMInput' className='inputContainer'>
             <div class='inputsDiv'>
-               <label for='ORMInput'>Weight:</label>
-               <input type='number' id='weight' name='weight' placeholder='100' min='1' value={originalWeight} onChange={() => setOriginalWeight(document.getElementById('weight').value)}></input>
+               <label for='weigth'>Weight:</label>
+               <input type='number' id='weight' name='weight' placeholder='100' min='1' value={weight} onChange={() => setWeight(document.getElementById('weight').value)}></input>
             </div>
             <div class='inputsDiv'>
                <label for='reps'>Repetitions:</label>
-               <input type='number' id='reps' name='reps' placeholder='8' min='1' max='32'></input>
+               <input type='number' id='reps' name='reps' placeholder='8' min='1' max='32' value={reps} onChange={() => setReps(document.getElementById('reps').value)}></input>
             </div>
             <form class='inputsDiv'>
-               <div class='radioBtns'>
-                  <input type='radio' id='weight-unity-lb' name='weight-unity' value='Lb' onClick={() => {
+               <div class='radioBtnsContainer'>
+                  <input class='radioBtns' type='radio' id='weight-unity-lb' name='weight-unity' onClick={() => {
                      setKgChecked(false);
                      setUnity(' Lb')
                   }} checked={!kgChecked} />
-                  <label for='weight-unity-lb'>Pounds</label>
+                  <label class='radioBtnsLabel' for='weight-unity-lb'>Pounds</label>
                </div>
-               <div class='radioBtns'>
-                  <input type='radio' id='weight-unity-kg' name='weight-unity' value='Kg' onClick={() => {
+               <div class='radioBtnsContainer'>
+                  <input class='radioBtns' type='radio' id='weight-unity-kg' name='weight-unity' onClick={() => {
                      setKgChecked(true);
                      setUnity(' Kg')
                   }} checked={kgChecked} />
-                  <label for='weight-unity-kg'>Kilograms</label>
+                  <label class='radioBtnsLabel' for='weight-unity-kg'>Kilograms</label>
                </div>
             </form>
-            <div id='btnContainer'>
-               <button id='changeUnityToKgBtn' class='buttons' value='Calculate' onClick={changeToKg}>Convert To Kg</button>
-               <button id='changeUnityToLbBtn' class='buttons' value='Calculate' onClick={changeToLb}>Convert To Lb</button>
-               <button id='calculateBtn' class='buttons' value='Calculate' onClick={() => calculateRM()}>Calculate</button>
+            <div className='btnContainer'>
+               <button id='changeUnityToKgBtn' class='buttons' onClick={() => changeToKg()}>Convert To Kg</button>
+               <button id='changeUnityToLbBtn' class='buttons' onClick={() => changeToLb()}>Convert To Lb</button>
+               <button id='calculateBtn' class='buttons' onClick={() => calculateRM()}>Calculate</button>
             </div>
          </div>
 
@@ -262,20 +262,34 @@ function OneRepMax(props) {
 }
 
 function IMC(props) {
-   const [originalWeight, setOriginalWeight] = React.useState();
-   const [originalHeight, setOriginalHeight] = React.useState();
+   const [weight, setWeight] = React.useState();
+   const [height, setHeight] = React.useState();
+   const [metric, setMetric] = React.useState(true);
    const [IMC, setIMC] = React.useState(0);
    const [label, setLabel] = React.useState('');
 
 
    const calculateIMC = () => {
-      const newIMC = originalWeight / ((originalHeight / 100) ** 2);
-      setIMC(Math.round(newIMC * 10) / 10);
+      height ? document.getElementById('height').classList.remove('border-red') : document.getElementById('height').classList.add('border-red');
+      weight ? document.getElementById('weight').classList.remove('border-red') : document.getElementById('weight').classList.add('border-red');
+      if (!height || !weight) {
+         return;
+      }
 
+      let newIMC;
+      if (metric) {
+         newIMC = weight / ((height / 100) ** 2);
+      } else {
+         newIMC = (weight / 2.20462) / ((height * 0.3048) ** 2);
+      }
+      if (newIMC > 100) {
+         newIMC = 100;
+      } else if (newIMC < 0) {
+         newIMC = 0;
+      }
+      setIMC(Math.round(newIMC * 10) / 10);
       changeLabel(newIMC);
       changeSlideBar(newIMC);
-
-
    }
 
    const changeSlideBar = (value) => {
@@ -336,26 +350,26 @@ function IMC(props) {
       <section id='imc'>
          <h2>IMC</h2>
 
-         <div id='imcInputContainer'>
+         <div id='imcInputContainer' className='inputContainer'>
             <div class='inputsDiv'>
                <label for='weight'>Weight:</label>
-               <input type='number' id='weight' name='weight' placeholder='70' min='1' max='800' value={originalWeight} onChange={() => setOriginalWeight(document.getElementById('weight').value)}></input>
+               <input type='number' id='weight' name='weight' placeholder='70' min='1' max='800' value={weight} onChange={() => setWeight(document.getElementById('weight').value)}></input>
             </div>
             <div class='inputsDiv'>
                <label for='height'>Height:</label>
-               <input type='number' id='height' name='height' placeholder='170' min='1' max='250' value={originalHeight} onChange={() => setOriginalHeight(document.getElementById('height').value)}></input>
+               <input type='number' id='height' name='height' placeholder='170' min='1' max='250' value={height} onChange={() => setHeight(document.getElementById('height').value)}></input>
             </div>
             <form class='inputsDiv'>
-               <div class='radioBtns'>
-                  <input type='radio' id='weight-unity-lb' name='weight-unity' value='Lb' onClick={() => { }} />
-                  <label for='weight-unity-lb'>Imperial</label>
+               <div class='radioBtnsContainer'>
+                  <input class='radioBtns' type='radio' id='weight-unity-lb' name='weight-unity' value='Lb' onClick={() => { setMetric(false) }} checked={!metric} />
+                  <label class='radioBtnsLabel' for='weight-unity-lb'>Imperial</label>
                </div>
-               <div class='radioBtns'>
-                  <input type='radio' id='weight-unity-kg' name='weight-unity' value='Kg' onClick={() => { }} />
-                  <label for='weight-unity-kg'>Metric</label>
+               <div class='radioBtnsContainer'>
+                  <input class='radioBtns' type='radio' id='weight-unity-kg' name='weight-unity' value='Kg' onClick={() => { setMetric(true) }} checked={metric} />
+                  <label class='radioBtnsLabel' for='weight-unity-kg'>Metric</label>
                </div>
             </form>
-            <div id='btnContainer'>
+            <div className='btnContainer'>
                <button id='calculateBtn' class='buttons' value='Calculate' onClick={() => calculateIMC()}>Calculate</button>
             </div>
          </div>
@@ -386,9 +400,59 @@ function IMC(props) {
 }
 
 function BodyFat(props) {
+
+   const [neck, setNeck] = React.useState();
+   const [waist, setWaist] = React.useState();
+   const [height, setHeight] = React.useState();
+   const [weight, setWeight] = React.useState();
+   const [metric, setMetric] = React.useState();
+   const [bf, setBF] = React.useState();
+
+   function calculateBF() {
+      const bf = Math.round((495 / (1.033 - 0.191 * Math.log10(waist - neck) + 0.155 * Math.log10(height)) - 450) * 10) / 10;
+      setBF(bf);
+   }
+
    return (
-      <section>
-         <h2>Estamos trabalhando nessa função...</h2>
+      <section id='imc'>
+         <h2>Body Fat</h2>
+
+         <div id='bfInputContainer' className='inputContainer'>
+            <div class='inputsDiv'>
+               <label for='neck'>Neck:</label>
+               <input type='number' id='neck' name='weight' placeholder='40' min='1' max='80' value={neck} onChange={() => setNeck(document.getElementById('neck').value)}></input>
+            </div>
+            <div class='inputsDiv'>
+               <label for='waist'>Waist:</label>
+               <input type='number' id='waist' name='waist' placeholder='90' min='1' max='250' value={waist} onChange={() => setWaist(document.getElementById('waist').value)}></input>
+            </div>
+            <div class='inputsDiv'>
+               <label for='height'>Height:</label>
+               <input type='number' id='height' name='height' placeholder='170' min='1' max='250' value={height} onChange={() => setHeight(document.getElementById('height').value)}></input>
+            </div>
+            <div class='inputsDiv'>
+               <label for='weight'>Weight:</label>
+               <input type='number' id='weight' name='weight' placeholder='70' min='1' max='250' value={weight} onChange={() => setWeight(document.getElementById('weight').value)}></input>
+            </div>
+            <form class='inputsDiv'>
+               <div class='radioBtnsContainer'>
+                  <input class='radioBtns' type='radio' id='weight-unity-lb' name='weight-unity' value='Lb' onClick={() => { setMetric(false) }} checked={!metric} />
+                  <label class='radioBtnsLabel' for='weight-unity-lb'>Imperial</label>
+               </div>
+               <div class='radioBtnsContainer'>
+                  <input class='radioBtns' type='radio' id='weight-unity-kg' name='weight-unity' value='Kg' onClick={() => { setMetric(true) }} checked={metric} />
+                  <label class='radioBtnsLabel' for='weight-unity-kg'>Metric</label>
+               </div>
+            </form>
+            <div className='btnContainer'>
+               <button id='calculateBtn' class='buttons' value='Calculate' onClick={() => calculateBF()}>Calculate</button>
+            </div>
+         </div>
+         <div>
+            <div id='displayIMC'>
+               <p>Your BodyFat: {bf}</p>
+            </div>
+         </div>
       </section>
    )
 }

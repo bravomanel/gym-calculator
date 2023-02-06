@@ -9,44 +9,6 @@
    }
 }
 
-#imcInputContainer {
-   margin: auto;
-   font-size: 1.5rem;
-   width: 60%;
-   align-items: center;
-
-   .inputsDiv {
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: space-evenly;
-      padding: .25rem;
-   }
-
-   .radioBtns {
-      width: 100%;
-      margin: auto;
-      text-align: center;
-      // border: 1px solid black;
-   }
-
-   #btnContainer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: .25rem;
-   }
-
-   .buttons {
-      font-size: 1.5rem;
-      width: 14rem;
-      background-color: white;
-      border: 1px solid black;
-      border-radius: .35rem;
-      margin: .25rem;
-   }
-
-}
-
 #slideDiv {
    // width: 100%;
    /* max-width: 32rem; */
@@ -79,8 +41,6 @@
    border-left: 3px solid;
 }
 
-// #slide1 {
-// }
 
 #slide6 {
    border: none;

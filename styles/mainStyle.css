@@ -47,42 +47,6 @@ a {
   margin: 0.5rem;
 }
 
-#ORMInput {
-  margin: auto;
-  font-size: 1.5rem;
-  width: 80%;
-  align-items: center;
-}
-#ORMInput .inputsDiv {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  padding: 0.25rem;
-}
-#ORMInput .radioBtns {
-  width: 100%;
-  margin: auto;
-  text-align: center;
-}
-#ORMInput #weight,
-#ORMInput #reps {
-  width: 8rem;
-}
-#ORMInput #btnContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.25rem;
-}
-#ORMInput .buttons {
-  font-size: 1.5rem;
-  width: 14rem;
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 0.35rem;
-  margin: 0.25rem;
-}
-
 #ORMTable {
   margin-top: 1rem;
   font-size: 1.5rem;
@@ -118,38 +82,6 @@ a {
   font-size: 2rem;
   text-align: center;
   margin: 0.5rem;
-}
-
-#imcInputContainer {
-  margin: auto;
-  font-size: 1.5rem;
-  width: 60%;
-  align-items: center;
-}
-#imcInputContainer .inputsDiv {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-evenly;
-  padding: 0.25rem;
-}
-#imcInputContainer .radioBtns {
-  width: 100%;
-  margin: auto;
-  text-align: center;
-}
-#imcInputContainer #btnContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.25rem;
-}
-#imcInputContainer .buttons {
-  font-size: 1.5rem;
-  width: 14rem;
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 0.35rem;
-  margin: 0.25rem;
 }
 
 #slideDiv {
@@ -216,6 +148,70 @@ a {
     flex-flow: wrap column;
   }
 }
+.inputContainer {
+  margin: auto;
+  font-size: 1.5rem;
+  width: 80%;
+  align-items: center;
+}
+
+.inputsDiv {
+  margin: auto;
+  width: 75%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 0.25rem;
+}
+
+.border-red {
+  border: 1px solid red;
+}
+
+.radioBtnsContainer {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.radioBtns {
+  margin-right: 0.2rem;
+}
+
+.buttons {
+  font-size: 1.5rem;
+  width: 14rem;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 0.35rem;
+  margin: 0.25rem;
+}
+
+.btnContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+}
+
+#imcInputContainer .inputsDiv {
+  justify-content: space-evenly;
+}
+
+#ORMInput #weight,
+#ORMInput #reps {
+  width: 8rem;
+}
+
+#bfInputContainer .inputsDiv {
+  margin: auto;
+  width: 45%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 0.25rem;
+}
+
 #lang_img {
   width: 3rem;
   margin-top: 1rem;

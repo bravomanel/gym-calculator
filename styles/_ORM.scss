@@ -9,49 +9,6 @@
    }
 }
 
-#ORMInput {
-   margin: auto;
-   font-size: 1.5rem;
-   width: 80%;
-   align-items: center;
-
-   .inputsDiv {
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: space-between;
-      padding: .25rem;
-   }
-
-   .radioBtns {
-      width: 100%;
-      margin: auto;
-      text-align: center;
-      // border: 1px solid black;
-   }
-
-   #weight,
-   #reps {
-      width: 8rem;
-   }
-
-   #btnContainer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: .25rem;
-   }
-
-   .buttons {
-      font-size: 1.5rem;
-      width: 14rem;
-      background-color: white;
-      border: 1px solid black;
-      border-radius: .35rem;
-      margin: .25rem;
-   }
-
-}
-
 #ORMTable {
    margin-top: 1rem;
    font-size: 1.5rem;
